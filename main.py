@@ -30,16 +30,22 @@ img = x_train[:,index]
 DigitClassifying.plot_pics(img , index, Up, new_images, y_train)
 
 #run kmean with p=20 and randomize centers
+# centers = np.random.random((10, 20)) - 0.5
+# clusters,centers,changes = DigitClassifying.Kmeans(10, new_images, centers)
+
+#test the success using test images
+new_images,Up = DigitClassifying.PCA2(x_test, 20)
 centers = np.random.random((10, 20)) - 0.5
 clusters,centers,changes = DigitClassifying.Kmeans(10, new_images, centers)
 
 #assign each cluster to a digit
-clusters_labels,clusters_digits = DigitClassifying.cluster_label(changes, y_train)
+clusters_labels,clusters_digits = DigitClassifying.cluster_label(changes, y_test)
 success_rate = DigitClassifying.success_tester(clusters_digits, clusters_labels)
-print("first run success rate is:")
+print("test run success rate is:")
 print(success_rate)
 
 #try the whole process 3 times
+new_images,Up = DigitClassifying.PCA2(x_train, 20)
 for i in range(3):
     centers = np.random.random((10, 20)) - 0.5
     clusters, centers, changes = DigitClassifying.Kmeans(10, new_images, centers)
